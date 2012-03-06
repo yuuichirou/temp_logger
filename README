@@ -1,0 +1,14 @@
+
+The content of the microcontroller flash memory for temp-logger project.
+
+This device displays the current temperature measured in many places,
+and archives the results of the measurements.The temperature is measured
+by the Dallas DS18B20 sensors. The results are displayed on the alphanumeric
+display compatible with the HD44780 controller.
+
+The source code is tested on ATMEL microcontroller ATMega8, 2x16 character
+LCD display.
+
+When there is a problem with accessing to the parallel port by AVRDUDE,
+add user to lp group.
+"sudo adduser <your_login> lp"
