@@ -1,0 +1,3 @@
+[submodule "src/lcd"]
+	path = src/lcd
+	url = github:lcd.git
