@@ -1,3 +1,6 @@
 [submodule "src/lcd"]
 	path = src/lcd
 	url = github:lcd.git
+[submodule "src/one_wire"]
+	path = src/one_wire
+	url = github:one_wire.git
