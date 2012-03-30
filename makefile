@@ -33,7 +33,8 @@ sources         = src/main.c
 objects = $(subst .c,.o,$(sources))
 
 #------------------------- Libraries ------------------------------------------
-libraries       = 
+libraries       = src/lcd/liblcd.a\
+                  src/one_wire/libone_wire.a
 
 #------------------------- C Preprocessor options -----------------------------
 CPPFLAGS        = -DF_CPU=$(F_CPU)UL -std=gnu89 -Wextra -pedantic
