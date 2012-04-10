@@ -24,6 +24,8 @@
 #include "clock.h"
 #include "macros.h"
 #include <avr/interrupt.h>
+#include <string.h>
+#include <stdlib.h>
 
 uint8_t                     hour ;
 uint8_t                     minute ;
@@ -66,5 +68,25 @@ void clock(void)
     /*day++ ;*/
     hour = 0 ;
   }
+}
+
+void time_to_string (char *string, uint8_t h, uint8_t m, uint8_t s)
+{
+  char temp[4] ;
+
+  if (h < 10)
+    strcat (string, "0") ;
+  itoa (h, temp, 10) ;
+  strcat (string, temp) ;
+  strcat (string, ":") ;
+  if (m < 10)
+    strcat(string, "0") ;
+  itoa (m, temp, 10) ;
+  strcat (string, temp) ;
+  strcat (string, ":") ;
+  if (s < 10)
+    strcat (string, "0") ;
+  itoa (s, temp, 10) ;
+  strcat (string, temp) ;
 }
 

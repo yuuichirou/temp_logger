@@ -44,6 +44,8 @@ enum T_SETTINGS { NO_CLOCK,
 
 void clock_timer_init (void) ;
 void clock (void) ;
+void time_to_string (char *string, uint8_t h, uint8_t m, uint8_t s) ;
+#define time_to_string_g(X) time_to_string(X, hour, minute, second)
 
 #endif /* _CLOCK_H_ */
 
