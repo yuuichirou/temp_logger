@@ -27,7 +27,8 @@ export TARGET_MCU      = atmega8
 export F_CPU           = 11059200
 
 #------------------------- Sources --------------------------------------------
-sources         = src/main.c
+sources         = src/main.c\
+                  src/clock.c
 
 # put object files in place where are source files
 objects = $(subst .c,.o,$(sources))

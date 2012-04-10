@@ -1,5 +1,5 @@
 /*
- * main.c
+ * clock.c
  * This file is part of the temp-logger project.
  *
  * Copyright (C) 2012 Krzysztof Kozik
@@ -21,31 +21,50 @@
  */
 
 #include <avr/io.h>
-#include "macros.h"
-#include "lcd/src/lcd.h"
-#include "one_wire/src/one_wire.h"
-#include <avr/interrupt.h>
 #include "clock.h"
+#include "macros.h"
+#include <avr/interrupt.h>
+
+uint8_t                     hour ;
+uint8_t                     minute ;
+volatile uint8_t            second ;
+volatile uint8_t            decsecond ;
 
 
-uint16_t lcd_status ;
-
-
-int main (void)
+void clock_timer_init (void)
 {
-  lcd_init () ;
-  lcd_goto_xy (3, 1) ;
-  lcd_print ("TEMPERATURE") ;
-  lcd_goto_xy (6, 2) ;
-  lcd_print ("LOGGER") ;
-  _delay_ms (2000) ;
-  lcd_clear_display () ;
-  clock_timer_init () ; sei () ;
-  while (1)
+  TCCR0 = PRESCALER_1024 ;
+  TCNT0 = 256 - T0_PERIOD ;
+  TIMSK |= _BV(TOIE0) ;
+}
+
+ISR (TIMER0_OVF_vect)
+{
+  TCNT0 = 256 - T0_PERIOD ;
+  decsecond++ ;
+  if (decsecond > 99)
   {
-    clock () ;
-    
+    second++ ;
+    decsecond = 0 ;
   }
-  return 0 ;
+}
+
+void clock(void)
+{
+  if (second > 59)
+  {
+    minute++ ;
+    second = 0 ;
+  }
+  if (minute > 59)
+  {
+    hour++ ;
+    minute = 0 ;
+  }
+  if (hour > 23)
+  {
+    /*day++ ;*/
+    hour = 0 ;
+  }
 }
 

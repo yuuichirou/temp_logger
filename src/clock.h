@@ -1,5 +1,5 @@
 /*
- * main.c
+ * clock.h
  * This file is part of the temp-logger project.
  *
  * Copyright (C) 2012 Krzysztof Kozik
@@ -20,32 +20,30 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <avr/io.h>
-#include "macros.h"
-#include "lcd/src/lcd.h"
-#include "one_wire/src/one_wire.h"
-#include <avr/interrupt.h>
-#include "clock.h"
+#ifndef _CLOCK_H_
+#define _CLOCK_H_
 
+#include <stdint.h>
+#include "clock_config.h"
 
-uint16_t lcd_status ;
+extern uint8_t              hour ;
+extern uint8_t              minute ;
+extern volatile uint8_t     second ;
+extern volatile uint8_t     decsecond ;
 
+enum T_SETTINGS { NO_CLOCK,
+                  NO_PRECALER,
+                  PRESCALER_8,
+                  PRESCALER_64,
+                  PRESCALER_256,
+                  PRESCALER_1024,
+                  EXT_CLOCK_FALING,
+                  EXT_CLOCK_RISING } ;
 
-int main (void)
-{
-  lcd_init () ;
-  lcd_goto_xy (3, 1) ;
-  lcd_print ("TEMPERATURE") ;
-  lcd_goto_xy (6, 2) ;
-  lcd_print ("LOGGER") ;
-  _delay_ms (2000) ;
-  lcd_clear_display () ;
-  clock_timer_init () ; sei () ;
-  while (1)
-  {
-    clock () ;
-    
-  }
-  return 0 ;
-}
+#define T0_PERIOD               F_CPU/T0_PRESCALER/T0_FREQUENCY
+
+void clock_timer_init (void) ;
+void clock (void) ;
+
+#endif /* _CLOCK_H_ */
 

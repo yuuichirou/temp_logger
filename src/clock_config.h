@@ -1,5 +1,5 @@
 /*
- * main.c
+ * clock_config.h
  * This file is part of the temp-logger project.
  *
  * Copyright (C) 2012 Krzysztof Kozik
@@ -20,32 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <avr/io.h>
-#include "macros.h"
-#include "lcd/src/lcd.h"
-#include "one_wire/src/one_wire.h"
-#include <avr/interrupt.h>
-#include "clock.h"
-
-
-uint16_t lcd_status ;
-
-
-int main (void)
-{
-  lcd_init () ;
-  lcd_goto_xy (3, 1) ;
-  lcd_print ("TEMPERATURE") ;
-  lcd_goto_xy (6, 2) ;
-  lcd_print ("LOGGER") ;
-  _delay_ms (2000) ;
-  lcd_clear_display () ;
-  clock_timer_init () ; sei () ;
-  while (1)
-  {
-    clock () ;
-    
-  }
-  return 0 ;
-}
+#define T0_PRESCALER            1024
+#define T0_FREQUENCY            100
+/* T0_FREQUENCY and T0_PRESCALER should be chosen so that
+   F_CPU/T0_PRESCALER/T0_FREQUENCY was between 1 and 256 */
 
